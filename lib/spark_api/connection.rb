@@ -20,12 +20,10 @@ module SparkApi
       opts = {
         :headers => headers
       }
-      if(force_ssl || self.ssl)
-        opts[:ssl] = {:verify => false } unless self.ssl_verify
-        opts[:url] = @endpoint.sub REG_HTTP, HTTPS_SCHEME
-      else 
-        opts[:url] = @endpoint.sub REG_HTTPS, HTTP_SCHEME
-      end
+
+      opts[:ssl] = false
+      opts[:url] = @endpoint
+      opts[:headers]['Host'] = 'api.dev.fbsdata.com'
 
       if self.compress
         opts[:headers][ACCEPT_ENCODING] = COMPRESS_ACCEPT_ENCODING
